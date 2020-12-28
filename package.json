@@ -2,12 +2,16 @@
   "name": "learn-starter",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=14.9.0"
+  },
   "scripts": {
     "dev": "NODE_OPTIONS='--conditions react-server' next dev",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
+    "@efox/eslint-config-react-prittier-ts": "^1.2.3",
     "next": "^10.0.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
