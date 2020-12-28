@@ -1,5 +1,5 @@
 {
-  "name": "learn-starter",
+  "name": "next-react-server-component",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -12,9 +12,10 @@
   },
   "dependencies": {
     "@efox/eslint-config-react-prittier-ts": "^1.2.3",
+    "babel-preset-react-app": "^10.0.0",
     "next": "^10.0.0",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "react": "^0.0.0-experimental-3310209d0",
+    "react-dom": "^0.0.0-experimental-3310209d0",
     "react-server-dom-webpack": "0.0.0-experimental-3310209d0"
   }
 }
