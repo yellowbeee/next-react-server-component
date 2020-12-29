@@ -7,7 +7,7 @@
   },
   "repository": "https://github.com/yellowbeee/next-react-server-component",
   "scripts": {
-    "dev": "cross-env NODE_OPTIONS='--conditions react-server' next dev",
+    "dev": "cross-env NODE_OPTIONS='--conditions=react-server' next dev",
     "build": "next build",
     "start": "next start"
   },
