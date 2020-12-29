@@ -1,20 +1,17 @@
 import path from 'path'
-import { readFileSync } from 'fs'
+import {readFileSync} from 'fs'
 import React from 'react'
-import { pipeToNodeWritable } from 'react-server-dom-webpack/writer'
+import {pipeToNodeWritable} from 'react-server-dom-webpack/writer'
 import ReactApp from '../../server/components/App'
 
 async function renderReactTree(res, props) {
-  const manifest = readFileSync(
-    path.resolve('./.next/react-client-manifest.json'),
-    'utf8'
-  )
+  const manifest = readFileSync(path.resolve('./.next/react-client-manifest.json'), 'utf8')
 
   const moduleMap = JSON.parse(manifest)
   pipeToNodeWritable(React.createElement(ReactApp, props), res, moduleMap)
 }
 
-function sendResponse(req, res, redirectToId) {
+function sendResponse(req, res) {
   renderReactTree(res, {
     selectedId: 1,
   })
