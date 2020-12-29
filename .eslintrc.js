@@ -10,6 +10,7 @@ module.exports = {
   env: {
     browser: true,
     node: true,
+    es6: true,
   },
   settings: {
     //自动发现React的版本，从而进行规范react代码
@@ -32,6 +33,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'react/prop-types': 0,
     'no-unused-vars': 0,
+    // 'no-undef': 0,
     'no-empty-pattern': 0,
     'prettier/prettier': [
       'error',

@@ -1,9 +1,8 @@
 import useServerComponent from '../hooks/useServerComponent'
 
-function Home({stars}) {
-  const Main = useServerComponent('api/react')
-
-  return <div className="container">{Main && Main}</div>
+function Home() {
+  const App = useServerComponent('/api/app')
+  return <div>{App}</div>
 }
 
 export default Home
