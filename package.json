@@ -13,12 +13,9 @@
   },
   "dependencies": {
     "next": "^10.0.0",
-    "node-sass": "^5.0.0",
     "react": "^0.0.0-experimental-3310209d0",
     "react-dom": "^0.0.0-experimental-3310209d0",
-    "react-server-dom-webpack": "0.0.0-experimental-3310209d0",
-    "sass": "^1.30.0",
-    "sass-loader": "^10.1.0"
+    "react-server-dom-webpack": "0.0.0-experimental-3310209d0"
   },
   "devDependencies": {
     "babel-preset-react-app": "^10.0.0",

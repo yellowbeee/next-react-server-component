@@ -1,23 +1,18 @@
-import React, {useState, useEffect, useRef, useCallback} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import style from './todoList.module.css'
 
+let statusFlag = false
 function TodoList() {
   const [inputValue, setInputValue] = useState('') //input的值
   const inputEle = useRef(null)
   const [list, setList] = useState([]) //代办列表数据
   // const [statusFlag, setStatusFlag] = useState()
   let inputVal = ''
-  let statusFlag = false
   // useEffect(() => {
   //   // console.log(inputEle.current.value, 'aaaa')
   //   inputEle.current = inputVal
   //   console.log(inputEle)
   // }, [inputVal])
-
-  // const changeInput = useCallback(e => {
-  //   // inputVal = e.target.value
-  //   console.log(inputEle.current, 'inputEle.current', e.target.value)
-  // }, [])
 
   //监听input
   function changeInput(e) {
@@ -53,26 +48,26 @@ function TodoList() {
         v.status = v.status == 1 ? 0 : 1
       }
     })
+    //判断是否全部选中
+    if (newList.every(item => item.status == 1)) {
+      statusFlag = true
+    } else {
+      statusFlag = false
+    }
     setList(newList)
   }
 
   //全选反选
   function selectAll() {
+    statusFlag = false
     let newList = [...list]
-    // if (newList.every(item => item.status == 0)) {
-    //   newList.forEach((v, i) => {
-    //     v.status = 1
-    //   })
-    // } else {
-    //   newList.forEach((v, i) => {
-    //     v.status = 0
-    //   })
-    // }
-    newList.forEach((v, i) => {
-      if (v.status == 0) {
+    for (let i = 0; i < newList.length; i++) {
+      if (newList[i].status == 0) {
         statusFlag = true
+        break
       }
-    })
+    }
+
     if (statusFlag) {
       newList.forEach((v, i) => {
         v.status = 1
@@ -94,6 +89,7 @@ function TodoList() {
 
   return (
     <div className={style.todoView}>
+      <h1 className={style.title}>Todos</h1>
       <div className={style.inputBox}>
         <input
           type="text"
@@ -101,7 +97,7 @@ function TodoList() {
           value={inputValue}
           ref={inputEle}
           placeholder="What needs to be done?"
-          onChange={changeInput}
+          onChange={e => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
         />
         {list.length > 0 && (
@@ -123,7 +119,7 @@ function TodoList() {
           })}
         </ul>
       )}
-      {list.length > 0 && (
+      {list.length > 0 && statusFlag && (
         <div className={style.clearAll} onClick={clearChecked}>
           clear data
         </div>
