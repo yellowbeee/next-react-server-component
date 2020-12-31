@@ -1,15 +1,41 @@
-import {useEffect, useState} from 'react'
+import {Suspense, useEffect, useState, unstable_getCacheForType, unstable_useCacheRefresh} from 'react'
 import {createFromFetch} from 'react-server-dom-webpack'
 
-function waitServerComponent(response) {
+function waitServer(action) {
   return new Promise(resolve => {
-    const action = () => {
+    const handle = () => {
       requestAnimationFrame(() => {
-        if (!response._chunks.size) action()
-        else resolve(response)
+        action(resolve, handle)
       })
     }
-    action()
+    handle()
+  })
+}
+
+function waitServerComponent(response) {
+  return waitServer(async (resolve, next) => {
+    if (!response._chunks.size) {
+      next()
+    } else {
+      const d = response.readRoot()
+
+      if (typeof d.type === 'string') resolve(d)
+      else {
+        resolve(
+          waitServer((resolve1, next1) => {
+            if (response._chunks.get(0)._status === 3) {
+              setTimeout(() => {
+                const M = d.type._init(d.type._payload).default
+                resolve1(M(d.props))
+              }, 50)
+              // next1()
+            } else {
+              next1()
+            }
+          }),
+        )
+      }
+    }
   })
 }
 
@@ -19,11 +45,13 @@ export default function useServerComponent(url) {
   const fetchComponent = async () => {
     const R = createFromFetch(fetch(url))
     const D = await waitServerComponent(R)
-    AAction(D.readRoot())
+    AAction(D)
   }
   useEffect(() => {
-    fetchComponent()
+    if (typeof window !== 'undefined') {
+      fetchComponent()
+    }
   }, [])
 
-  return A
+  return A ? <Suspense>{A}</Suspense> : null
 }
