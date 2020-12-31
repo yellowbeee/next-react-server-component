@@ -1,7 +1,7 @@
 // import React from 'react'
-import {HocComponentResponse} from '../../../server/render'
-import HocClient from '../../../components/HocClient'
-import db from '../../../server/db'
+import {HocComponentResponse} from '../../../../server/render'
+import HocClient from '../../../../components/HocClient'
+import db from '../../../../server/db'
 
 const TodoList = HocClient('./components/TodoList/index.client.js')
 
