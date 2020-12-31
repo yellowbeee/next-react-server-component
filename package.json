@@ -12,6 +12,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "express": "^4.17.1",
     "next": "^10.0.0",
     "node-sass": "^5.0.0",
     "react": "^0.0.0-experimental-3310209d0",
@@ -21,7 +22,6 @@
     "sass-loader": "^10.1.0"
   },
   "devDependencies": {
-    "babel-preset-react-app": "^10.0.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.16.0",
     "eslint-config-prettier": "^7.1.0",
