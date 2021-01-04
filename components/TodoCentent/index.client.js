@@ -1,23 +1,16 @@
 import React, {useState, useEffect, useRef} from 'react'
-import style from './todoList.module.css'
-
+import style from './index.module.css'
+import TodoList from '../TodoList/index.client'
+import 'whatwg-fetch'
 let statusFlag = false
-function TodoList() {
+function TodoContent() {
   const [inputValue, setInputValue] = useState('') //input的值
   const inputEle = useRef(null)
   const [list, setList] = useState([]) //代办列表数据
   // const [statusFlag, setStatusFlag] = useState()
-  let inputVal = ''
   // useEffect(() => {
-  //   // console.log(inputEle.current.value, 'aaaa')
-  //   inputEle.current = inputVal
-  //   console.log(inputEle)
-  // }, [inputVal])
 
-  //监听input
-  function changeInput(e) {
-    setInputValue(e.target.value)
-  }
+  // }, [])
 
   //回车添加数据
   function handleKeyDown(event) {
@@ -104,21 +97,7 @@ function TodoList() {
           <span className={`${style.toggleAll} ${statusFlag && style.toogleCheck}`} onClick={selectAll}></span>
         )}
       </div>
-      {list.length > 0 && (
-        <ul className={style.todoUl}>
-          {list.map((item, index) => {
-            return (
-              <li key={index}>
-                <span
-                  className={`${style.checkBox} ${item.status && style.checked}`}
-                  onClick={changeChecked.bind(this, index)}></span>
-                <span className={style.text}>{item.text}</span>
-                <span className={style.delButton} onClick={handleDel.bind(this, index)}></span>
-              </li>
-            )
-          })}
-        </ul>
-      )}
+      <TodoList list={list} changeChecked={changeChecked} handleDel={handleDel} />
       {list.length > 0 && statusFlag && (
         <div className={style.clearAll} onClick={clearChecked}>
           clear data
@@ -127,4 +106,4 @@ function TodoList() {
     </div>
   )
 }
-export default TodoList
+export default TodoContent

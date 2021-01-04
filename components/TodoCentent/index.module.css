@@ -1,0 +1,59 @@
+
+.todoView {
+    position: absolute;
+    top:10%;
+    left:50%;
+    transform: translateX(-50%);
+    width: 550px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+}
+.todoView .title {
+    font-size: 100px;
+    font-weight: 100;
+    text-align: center;
+    color: rgba(175, 47, 47, 0.15);
+    margin: 0;
+}
+
+.todoView .todoInput {
+    width: 100%;
+    padding: 16px 16px 16px 60px;
+    border: none;
+    background: rgba(0, 0, 0, 0.003);
+    box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);
+    font-size: 24px;
+    box-sizing: border-box;
+}
+.todoView .todoInput::-webkit-input-placeholder {
+    color: #eee;
+}
+
+.todoView .inputBox {
+    position: relative;
+    border-top: 1px solid #eee;
+}
+.todoView .toggleAll {
+    width: 60px;
+    height: 34px;
+    font-size: 0;
+    position: absolute;
+    top: 50%;
+    left: -5px;
+    transform: translateY(-50%) rotate(90deg);
+}
+.todoView .toggleAll::after {
+    content: '❯';
+    font-size: 22px;
+    color: #e6e6e6;
+    padding: 10px 27px 10px 27px;
+}
+.todoView .toogleCheck::after {
+    color: #737373;
+}
+
+.todoView .clearAll {
+    padding: 10px;
+    text-align: right;
+    font-size: 24px;
+    color:#777;
+}

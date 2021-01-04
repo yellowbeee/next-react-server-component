@@ -1,0 +1,56 @@
+ .todoUl {
+    margin: 0;
+    padding: 0;
+}
+ .todoUl li {
+    position: relative;
+    list-style: none;
+    border-bottom: 1px solid #ededed;
+    padding: 20px 20px 20px 60px;
+    display: flex;
+    align-items: center;
+}
+ .todoUl li .checkBox {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+    left: 10px;
+}
+ .todoUl li .checked::after {
+    content:'';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 30px;
+    height: 30px;
+    background: url('../../assets/images/icon_gou.png') no-repeat center;
+    background-size:100%;
+}
+
+ .todoUl li .delButton {
+    width: 40px;
+    height: 40px;
+    margin: auto 0;
+    font-size: 30px;
+    color: #cc9a9a;
+    transition: color 0.2s ease-out;
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+ .todoUl li:hover .delButton{
+    display: block;
+}
+ .todoUl li .delButton::after {
+    content: '×';
+}
+ .todoUl li .delButton:hover {
+    color: #af5b5e;
+}
