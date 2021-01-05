@@ -5,10 +5,11 @@ import db from '../../../../server/db'
 
 const TodoList = HocClient('./components/TodoList/index.client.js')
 
-const TodoListContainers = ({request}) => {
+const TodoListContainers = ({request, ...props}) => {
   const {size, name} = request.query
 
   let list = db.get('todos').value()
+
   // filter
   // if (name) list = list.filter(item => item.name.indexOf(name) >= 0)
   return <TodoList list={list} />
