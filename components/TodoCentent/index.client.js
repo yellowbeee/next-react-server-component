@@ -1,15 +1,20 @@
 import React, {useState, useEffect, useRef} from 'react'
 import style from './index.module.css'
-// import TodoList from '../TodoList/index.client'
 import useServerComponent from '../../hooks/useServerComponent'
 import 'whatwg-fetch'
 let statusFlag = false
+let listArry = []
 function TodoContent() {
   const TodoList = useServerComponent('/api/serverComponents/todoList?size=10')
   const [inputValue, setInputValue] = useState('') //input的值
   const inputEle = useRef(null)
+  const todoRef = useRef(null)
   const [list, setList] = useState([]) //代办列表数据
   // const [statusFlag, setStatusFlag] = useState()
+  function init(list) {
+    listArry = list
+  }
+  console.log(listArry, 'listArry')
   //回车添加数据
   function handleKeyDown(event) {
     let newList = [...list]
@@ -32,10 +37,20 @@ function TodoContent() {
   }
 
   //删除单个列表元素
-  function handleDel(index) {
-    let newList = [...list]
-    newList.splice(index, 1)
-    setList(newList)
+  function handleDel(item) {
+    let delList = []
+    delList.push(item.id)
+    fetch('/api/deleteTodo', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ids: delList,
+      }),
+    }).then(res => {
+      console.log(res)
+    })
   }
 
   //单个选中 取消
@@ -85,6 +100,11 @@ function TodoContent() {
     setList(newList)
   }
 
+  function changeStatus(flag) {
+    statusFlag = flag
+    // console.log(statusFlag, flag, listArry, '>>>>>>>>>>>>')
+  }
+
   return (
     <div className={style.todoView}>
       <h1 className={style.title}>Todos</h1>
@@ -103,8 +123,9 @@ function TodoContent() {
         )}
       </div>
       {/* <TodoList list={list} changeChecked={changeChecked} handleDel={handleDel} /> */}
-      {TodoList && TodoList}
-      {list.length > 0 && statusFlag && (
+      <TodoList handleDel={handleDel} init={init} changeStatus={changeStatus} />
+      {statusFlag}
+      {listArry.length > 0 && statusFlag && (
         <div className={style.clearAll} onClick={clearChecked}>
           clear data
         </div>

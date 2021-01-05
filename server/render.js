@@ -6,6 +6,7 @@ async function renderReactTree(res, component) {
   const manifest = readFileSync(path.resolve('./.next/react-client-manifest.json'), 'utf8')
 
   const moduleMap = JSON.parse(manifest)
+
   pipeToNodeWritable(component, res, moduleMap)
 }
 
