@@ -1,17 +1,15 @@
 import React, {useState, useEffect, useRef} from 'react'
 import style from './index.module.css'
-import TodoList from '../TodoList/index.client'
+// import TodoList from '../TodoList/index.client'
+import useServerComponent from '../../hooks/useServerComponent'
 import 'whatwg-fetch'
 let statusFlag = false
 function TodoContent() {
+  const TodoList = useServerComponent('/api/serverComponents/todoList?size=10')
   const [inputValue, setInputValue] = useState('') //input的值
   const inputEle = useRef(null)
   const [list, setList] = useState([]) //代办列表数据
   // const [statusFlag, setStatusFlag] = useState()
-  // useEffect(() => {
-
-  // }, [])
-
   //回车添加数据
   function handleKeyDown(event) {
     let newList = [...list]
@@ -21,6 +19,13 @@ function TodoContent() {
         return
       }
       newList.push({text: inputValue.trim(), status: 0})
+      fetch(`/api/addTodo?name=${inputValue}`)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
       setList(newList)
       setInputValue('')
     }
@@ -97,7 +102,8 @@ function TodoContent() {
           <span className={`${style.toggleAll} ${statusFlag && style.toogleCheck}`} onClick={selectAll}></span>
         )}
       </div>
-      <TodoList list={list} changeChecked={changeChecked} handleDel={handleDel} />
+      {/* <TodoList list={list} changeChecked={changeChecked} handleDel={handleDel} /> */}
+      {TodoList && TodoList}
       {list.length > 0 && statusFlag && (
         <div className={style.clearAll} onClick={clearChecked}>
           clear data

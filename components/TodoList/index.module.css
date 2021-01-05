@@ -28,7 +28,7 @@
     transform: translate(-50%,-50%);
     width: 30px;
     height: 30px;
-    background: url('../../assets/images/icon_gou.png') no-repeat center;
+    background: url('../../sources/images/icon_gou.png') no-repeat center;
     background-size:100%;
 }
 
