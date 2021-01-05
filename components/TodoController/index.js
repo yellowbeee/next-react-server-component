@@ -45,8 +45,7 @@ function TodoContent() {
 
   // revert todos
   const revertTodos = () => {
-    if (isCompleteAll) completeIdsAction([])
-    else completeIdsAction(todos.map(todo => todo.id))
+    completeIdsAction(isCompleteAll ? [] : todos.map(todo => todo.id))
   }
 
   // list change
