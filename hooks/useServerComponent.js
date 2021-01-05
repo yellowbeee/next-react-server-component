@@ -61,5 +61,7 @@ export default function useServerComponent(url) {
     }
   }, [])
 
-  return A ? A : () => <></>
+  const comp = A ? A : () => <></>
+
+  return [comp, fetchComponent]
 }
