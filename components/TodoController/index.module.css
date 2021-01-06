@@ -5,13 +5,13 @@
     left:50%;
     transform: translateX(-50%);
     width: 550px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+    box-shadow:rgba(0, 0, 0, 0.2) 0 5px 24px 0;
 }
 .todoView .title {
     font-size: 100px;
     font-weight: 100;
     text-align: center;
-    color: rgba(175, 47, 47, 0.15);
+    color: rgb(153, 153, 153, .22);
     margin: 0;
 }
 
@@ -23,6 +23,7 @@
     box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);
     font-size: 24px;
     box-sizing: border-box;
+    outline: none;
 }
 .todoView .todoInput::-webkit-input-placeholder {
     color: #eee;
@@ -55,5 +56,5 @@
     padding: 10px;
     text-align: right;
     font-size: 24px;
-    color:#777;
+    color: rgb(153, 153, 153, .22);
 }

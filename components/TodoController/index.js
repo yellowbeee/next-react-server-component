@@ -43,6 +43,19 @@ function TodoContent() {
     })
   }
 
+  // fetch delete todo
+  const fetchUpdataTodo = async ids => {
+    return await fetch('/api/deleteTodo', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ids,
+      }),
+    })
+  }
+
   // revert todos
   const revertTodos = () => {
     completeIdsAction(isCompleteAll ? [] : todos.map(todo => todo.id))
@@ -84,7 +97,7 @@ function TodoContent() {
           placeholder="What needs to be done?"
           onKeyDown={handleKeyDown}
         />
-        {todos.length && (
+        {todos.length > 0 && (
           <span className={`${style.toggleAll} ${isCompleteAll && style.toogleCheck}`} onClick={revertTodos}></span>
         )}
       </div>
@@ -97,7 +110,7 @@ function TodoContent() {
         onChange={onTodoListChange}
       />
 
-      {todos.length && isCompleteAll && <div className={style.clearAll}>clear data</div>}
+      {todos.length > 0 && isCompleteAll && <div className={style.clearAll}>clear data</div>}
     </div>
   )
 }

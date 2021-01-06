@@ -21,7 +21,7 @@ function TodoList({list, completeIds, onChange, onComplete, onDelete, onComplete
             <span
               className={`${style.checkBox} ${completeIds.includes(item.id) ? style.checked : ''}`}
               onClick={() => onComplete?.(item.id)}></span>
-            <span className={style.text}>{item.name}</span>
+            <span className={completeIds.includes(item.id) ? style.done : ''}>{item.name}</span>
             <span className={style.delButton} onClick={() => onDelete?.(item.id)}></span>
           </li>
         ))}
