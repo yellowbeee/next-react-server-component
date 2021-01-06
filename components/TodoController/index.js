@@ -4,7 +4,7 @@ import useServerComponent from '../../hooks/useServerComponent'
 
 function TodoContent() {
   // todo list component
-  const [TodoList, fetchTodoList] = useServerComponent('/api/serverComponents/todoList?size=10')
+  const [TodoList, fetchTodoList] = useServerComponent('/api/serverComponents/todoList')
   // todo list data
   const [todos, todosAction] = useState([])
   // complete all
