@@ -56,15 +56,10 @@ function TodoContent() {
 
   // revert todos
   const revertTodos = async () => {
-    // completeIdsAction(isCompleteAll ? [] : todos.map(todo => todo.id))
     if (isCompleteAll) {
-      todos.map((item, index) => {
-        item.status = 0
-      })
+      todos.map(item => (item.status = 0))
     } else {
-      todos.map((item, index) => {
-        item.status = 1
-      })
+      todos.map(item => (item.status = 1))
     }
     const response = await fetchUpgradeTodo([...todos])
     fetchTodoList()
