@@ -4,7 +4,7 @@ import style from './index.module.css'
 function TodoList({list, completeIds, onChange, onComplete, onDelete}) {
   useEffect(() => {
     onChange(list)
-  }, [list])
+  }, [list, onChange])
 
   return (
     list.length > 0 && (
