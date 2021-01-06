@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useEffect, useCallback} from 'react'
 import style from './index.module.css'
 import useServerComponent from '../../hooks/useServerComponent'
 
@@ -62,9 +62,9 @@ function TodoContent() {
   }
 
   // list change
-  const onTodoListChange = list => {
+  const onTodoListChange = useCallback(list => {
     todosAction(list.slice(0))
-  }
+  }, [])
 
   // onClick complete some one
   const onComplete = id => {
@@ -85,6 +85,10 @@ function TodoContent() {
   const onCompleteAll = is => {
     isCompleteAllAction(is)
   }
+
+  useEffect(() => {
+    isCompleteAllAction(todos.every(item => completeIds.some(select => select === item.id)))
+  }, [todos, completeIds])
 
   return (
     <div className={style.todoView}>

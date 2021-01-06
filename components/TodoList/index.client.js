@@ -1,14 +1,7 @@
 import React, {useEffect} from 'react'
 import style from './index.module.css'
 
-function TodoList({list, completeIds, onChange, onComplete, onDelete, onCompleteAll}) {
-  // is select all ?
-  const isCompleteAll = list.every(item => completeIds.some(select => select === item.id))
-
-  useEffect(() => {
-    onCompleteAll?.(isCompleteAll)
-  }, [isCompleteAll, onCompleteAll])
-
+function TodoList({list, completeIds, onChange, onComplete, onDelete}) {
   useEffect(() => {
     onChange(list)
   }, [list, onChange])
