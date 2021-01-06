@@ -58,3 +58,7 @@
     font-size: 24px;
     color: rgb(153, 153, 153, .22);
 }
+.todoView .clearAll:hover {
+    color:#333;
+    cursor:pointer
+}

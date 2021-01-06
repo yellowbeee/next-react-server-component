@@ -7,8 +7,6 @@ function TodoContent() {
   const [TodoList, fetchTodoList] = useServerComponent('/api/serverComponents/todoList?size=10')
   // todo list data
   const [todos, todosAction] = useState([])
-  // complete id
-  const [completeIds, completeIdsAction] = useState([])
   // complete all
   const [isCompleteAll, isCompleteAllAction] = useState(false)
   // input ref
@@ -43,22 +41,33 @@ function TodoContent() {
     })
   }
 
-  // fetch delete todo
-  const fetchUpdataTodo = async ids => {
-    return await fetch('/api/deleteTodo', {
+  // fetch upstatus todo
+  const fetchUpgradeTodo = async updates => {
+    return await fetch('/api/upgradeTodo', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        ids,
+        updates,
       }),
     })
   }
 
   // revert todos
-  const revertTodos = () => {
-    completeIdsAction(isCompleteAll ? [] : todos.map(todo => todo.id))
+  const revertTodos = async () => {
+    // completeIdsAction(isCompleteAll ? [] : todos.map(todo => todo.id))
+    if (isCompleteAll) {
+      todos.map((item, index) => {
+        item.status = 0
+      })
+    } else {
+      todos.map((item, index) => {
+        item.status = 1
+      })
+    }
+    const response = await fetchUpgradeTodo([...todos])
+    fetchTodoList()
   }
 
   // list change
@@ -67,11 +76,10 @@ function TodoContent() {
   }, [])
 
   // onClick complete some one
-  const onComplete = id => {
-    const targetIndex = completeIds.findIndex(completeId => id === completeId)
-    if (targetIndex >= 0) completeIds.splice(targetIndex, 1)
-    else completeIds.push(id)
-    completeIdsAction(completeIds.slice(0))
+  const onComplete = async index => {
+    todos[index].status = todos[index].status == 1 ? 0 : 1
+    const response = await fetchUpgradeTodo([todos[index]])
+    fetchTodoList()
   }
 
   // onClick delete some one
@@ -81,14 +89,16 @@ function TodoContent() {
     fetchTodoList()
   }
 
-  // listen complete all
-  const onCompleteAll = is => {
-    isCompleteAllAction(is)
+  // onClick delete all
+  const onDeleteAll = async id => {
+    const response = await fetchDeleteTodo([...todos])
+    // upgrade list
+    fetchTodoList()
   }
 
   useEffect(() => {
-    isCompleteAllAction(todos.every(item => completeIds.some(select => select === item.id)))
-  }, [todos, completeIds])
+    isCompleteAllAction(todos.every(item => item.status == 1))
+  }, [todos])
 
   return (
     <div className={style.todoView}>
@@ -106,15 +116,13 @@ function TodoContent() {
         )}
       </div>
 
-      <TodoList
-        completeIds={completeIds}
-        onComplete={onComplete}
-        onDelete={onDelete}
-        onCompleteAll={onCompleteAll}
-        onChange={onTodoListChange}
-      />
+      <TodoList onComplete={onComplete} onDelete={onDelete} onChange={onTodoListChange} />
 
-      {todos.length > 0 && isCompleteAll && <div className={style.clearAll}>clear data</div>}
+      {todos.length > 0 && isCompleteAll && (
+        <div className={style.clearAll} onClick={onDeleteAll}>
+          clear data
+        </div>
+      )}
     </div>
   )
 }

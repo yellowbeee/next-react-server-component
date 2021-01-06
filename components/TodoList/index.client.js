@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import style from './index.module.css'
 
-function TodoList({list, completeIds, onChange, onComplete, onDelete}) {
+function TodoList({list, onChange, onComplete, onDelete}) {
   useEffect(() => {
     onChange(list)
   }, [list, onChange])
@@ -12,9 +12,9 @@ function TodoList({list, completeIds, onChange, onComplete, onDelete}) {
         {list.map((item, index) => (
           <li key={index}>
             <span
-              className={`${style.checkBox} ${completeIds.includes(item.id) ? style.checked : ''}`}
-              onClick={() => onComplete?.(item.id)}></span>
-            <span className={completeIds.includes(item.id) ? style.done : ''}>{item.name}</span>
+              className={`${style.checkBox} ${item.status ? style.checked : ''}`}
+              onClick={() => onComplete?.(index)}></span>
+            <span className={item.status ? style.done : ''}>{item.name}</span>
             <span className={style.delButton} onClick={() => onDelete?.(item.id)}></span>
           </li>
         ))}
