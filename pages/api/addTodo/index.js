@@ -6,7 +6,7 @@ export default function handle(req, res) {
     res.send({code: -1, data: null, message: 'loss name params'})
   } else {
     db.get('todos')
-      .push({id: new Date() / 1, name})
+      .push({id: new Date() / 1, name, status: 0})
       .write()
     res.send({code: 0, data: null, message: 'add success'})
   }
