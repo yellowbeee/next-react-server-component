@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useEffect, useCallback} from 'react'
 import style from './index.module.css'
 import useServerComponent from '../../hooks/useServerComponent'
 
@@ -49,9 +49,9 @@ function TodoContent() {
   }
 
   // list change
-  const onTodoListChange = list => {
+  const onTodoListChange = useCallback(list => {
     todosAction(list.slice(0))
-  }
+  }, [])
 
   // onClick complete some one
   const onComplete = id => {
@@ -73,6 +73,10 @@ function TodoContent() {
     isCompleteAllAction(is)
   }
 
+  useEffect(() => {
+    isCompleteAllAction(todos.every(item => completeIds.some(select => select === item.id)))
+  }, [todos, completeIds])
+
   return (
     <div className={style.todoView}>
       <h1 className={style.title}>Todos</h1>
@@ -84,7 +88,7 @@ function TodoContent() {
           placeholder="What needs to be done?"
           onKeyDown={handleKeyDown}
         />
-        {todos.length && (
+        {todos.length > 0 && (
           <span className={`${style.toggleAll} ${isCompleteAll && style.toogleCheck}`} onClick={revertTodos}></span>
         )}
       </div>
@@ -97,7 +101,7 @@ function TodoContent() {
         onChange={onTodoListChange}
       />
 
-      {todos.length && isCompleteAll && <div className={style.clearAll}>clear data</div>}
+      {todos.length > 0 && isCompleteAll && <div className={style.clearAll}>clear data</div>}
     </div>
   )
 }
