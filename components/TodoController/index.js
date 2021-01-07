@@ -9,13 +9,15 @@ function TodoContent() {
   const [todos, todosAction] = useState([])
   // complete all
   const [isCompleteAll, isCompleteAllAction] = useState(false)
+  // complete part
+  const [isCompletePart, isCompletePartAction] = useState(false)
   // input ref
   const inputEle = useRef(null)
 
   //回车添加数据
   const handleKeyDown = async event => {
     const inputValue = inputEle.current.value
-    let inputVal = inputValue.replace(/(^\s*)|(\s*$)/g, '')
+    let inputVal = inputValue.trim()
     if (event.keyCode == '13') {
       if (inputVal == '' || inputVal == null) {
         return
@@ -56,12 +58,10 @@ function TodoContent() {
 
   // revert todos
   const revertTodos = async () => {
-    if (isCompleteAll) {
-      todos.map(item => (item.status = 0))
-    } else {
-      todos.map(item => (item.status = 1))
-    }
-    const response = await fetchUpgradeTodo([...todos])
+    let selectAll = isCompleteAll
+      ? todos.map(item => ({id: item.id, status: 0}))
+      : todos.map(item => ({id: item.id, status: 1}))
+    const response = await fetchUpgradeTodo([...selectAll])
     fetchTodoList()
   }
 
@@ -72,8 +72,8 @@ function TodoContent() {
 
   // onClick complete some one
   const onComplete = async index => {
-    todos[index].status = todos[index].status == 1 ? 0 : 1
-    const response = await fetchUpgradeTodo([todos[index]])
+    let params = {id: todos[index].id, status: todos[index].status == 1 ? 0 : 1}
+    const response = await fetchUpgradeTodo([params])
     fetchTodoList()
   }
 
@@ -86,13 +86,16 @@ function TodoContent() {
 
   // onClick delete all
   const onDeleteAll = async id => {
-    const response = await fetchDeleteTodo([...todos])
+    let selectId = []
+    todos.map(item => item.status == 1 && selectId.push(item.id))
+    const response = await fetchDeleteTodo(selectId)
     // upgrade list
     fetchTodoList()
   }
 
   useEffect(() => {
     isCompleteAllAction(todos.every(item => item.status == 1))
+    isCompletePartAction(todos.some(item => item.status == 1))
   }, [todos])
 
   return (
@@ -113,9 +116,9 @@ function TodoContent() {
 
       <TodoList onComplete={onComplete} onDelete={onDelete} onChange={onTodoListChange} />
 
-      {todos.length > 0 && isCompleteAll && (
+      {todos.length > 0 && isCompletePart && (
         <div className={style.clearAll} onClick={onDeleteAll}>
-          clear data
+          Clear Completed
         </div>
       )}
     </div>
