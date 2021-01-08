@@ -71,8 +71,8 @@ function TodoContent() {
   }, [])
 
   // onClick complete some one
-  const onComplete = async index => {
-    let params = {id: todos[index].id, status: todos[index].status == 1 ? 0 : 1}
+  const onComplete = async item => {
+    let params = {id: item.id, status: item.status == 1 ? 0 : 1}
     const response = await fetchUpgradeTodo([params])
     fetchTodoList()
   }

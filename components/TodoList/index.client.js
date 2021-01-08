@@ -13,7 +13,7 @@ function TodoList({list, onChange, onComplete, onDelete}) {
           <li key={index}>
             <span
               className={`${style.checkBox} ${item.status ? style.checked : ''}`}
-              onClick={() => onComplete?.(index)}></span>
+              onClick={() => onComplete?.(item)}></span>
             <span className={item.status ? style.done : ''}>{item.name}</span>
             <span className={style.delButton} onClick={() => onDelete?.(item.id)}></span>
           </li>
